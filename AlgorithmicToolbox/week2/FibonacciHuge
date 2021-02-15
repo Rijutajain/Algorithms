@@ -1,0 +1,60 @@
+import java.util.*;
+
+public class FibonacciHuge {//O(n)
+   private static long calc_fib(int n,int m){
+    if(n==0){
+     return 0;
+     }
+     else{
+    long[] fi=new long[n+1];
+    fi[0]=0;
+    fi[1]=1;
+    for(int i=2;i<=n;i++){
+      fi[i]=(fi[i-1]+fi[i-2])%m;
+
+    }
+    return fi[n];
+  }
+  }
+
+    private static int period(int m){//O(m^2)
+        long[] arr=new long[m*m+11];
+        arr[0]=0;
+        arr[1]=1;
+         for(int i=2;i<=m*m+10;i++){
+            arr[i]=(arr[i-1]+arr[i-2])%m;
+
+         }
+
+          for(int i=2;i<=m*m+10;i++){
+            long f1=arr[i-1];
+            long g1=f1%m;
+            long f2=arr[i];
+            long g2=f2%m;
+            if(g2==1 && g1==0){
+                return i-1;
+
+            }
+
+          }
+       
+      return -1;
+    }
+    private static long getFibonacciHugeNaive(long n, int m) {
+        if (n <= 1)
+            return n;
+        int per=period(m);//m^4
+        int rem=(int)(n%per);
+        long j=calc_fib(rem,m);//m^2
+        int k=(int)(j%m);
+        return k;
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        long n = scanner.nextLong();
+        int m = scanner.nextInt();
+        System.out.println(getFibonacciHugeNaive(n, m));
+    }
+}
+
